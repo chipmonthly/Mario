@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4f1e8" />
+  <meta name="description" content="一卷山河，一场冒险。中式水墨风格的横版跳跃游戏，支持单人和本地双人。" />
+  <title>墨境 · 超级马里奥 | Ink Kingdom</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <div class="paper-texture" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="墨境首页"><span class="brand-seal">墨<br>境</span><span class="brand-name">墨境<span>INK KINGDOM</span></span><span class="brand-divider"></span><span class="brand-tag">超级马里奥 · 水墨篇</span></a>
+    <nav aria-label="主导航"><button class="nav-link active" id="nav-play">开始冒险</button><button class="nav-link" id="nav-chapters">八方山河 <span>08</span></button><button class="nav-link" id="nav-help">游玩指南 ↗</button></nav>
+    <span class="header-note"><i></i> 无需下载，即刻入画</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow"><span></span> A FAMILIAR ADVENTURE, REIMAGINED</p><h1>一跃，入山河<span class="title-dot">。</span></h1><p class="intro-copy">山河失色，纸鹤来信。<br class="mobile-break">沿八方山河寻路，在十六处暗室拾回被擦去的记忆。</p></div>
+      <div class="intro-aside"><span class="vertical-poem">山水有相逢，冒险无止境</span><span class="small-seal">游<br>心</span><span class="edition">水墨新作<br><b>VOL. 01 / 2026</b></span></div>
+    </section>
+
+    <section class="play-section" aria-label="墨境游戏">
+      <div class="game-toolbar">
+        <div class="chapter-label"><span class="chapter-index" id="chapter-index">壹</span><div><span class="overline">当前图卷 · CHAPTER <span id="chapter-number">01</span></span><strong id="chapter-title">竹林初晴</strong></div><button class="icon-button change-chapter" id="change-chapter" aria-label="切换关卡" title="切换关卡">⌄</button></div>
+        <div class="game-stats" aria-live="off"><span title="队伍金币"><i class="coin-icon"></i><b id="coin-count">00</b></span><span title="剩余生命"><i class="heart-icon">♥</i><b id="life-count">03</b></span><span class="time-stat" title="本局用时"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="11" r="6.5"/><path d="M10 7v4l3 2M7 1h6M10 1v3"/></svg><b id="time-count">000</b><small>s</small></span></div>
+        <div class="toolbar-actions"><button class="icon-button" id="sound-button" aria-label="开启音效" title="开启音效" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path id="sound-waves" d="m16 9 6 6m0-6-6 6"/></svg></button><button class="icon-button" id="fullscreen-button" aria-label="全屏游戏" title="全屏游戏"><svg viewBox="0 0 24 24" fill="none"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div>
+      </div>
+      <div class="quest-bar"><span class="quest-emblem">印</span><span id="quest-text">找到纸狐阿砚 · 触碰即可救援</span><span class="quest-seals" title="本卷藏印"><span id="seal-count">0 / 3</span> 藏印</span><span class="skill-status" id="skill-status">踏墨就绪 · E</span><button id="world-map-button">山河图 ⌘</button><button id="journal-button">山河手记 ↗</button></div>
+      <div class="travel-track" aria-hidden="true"><i id="travel-progress"></i></div>
+      <div class="game-viewport" id="game-viewport">
+        <canvas id="game" width="1120" height="600" tabindex="0" aria-label="横版跳跃游戏画布。单人使用 A、D 移动，W 或空格跳跃。双人第二位玩家使用方向键。按 P 暂停。"></canvas>
+        <div class="canvas-caption" id="canvas-caption"><span>竹影摇风 · 晴山入墨</span><span>向右探索山河 <span class="caption-arrow">⟶</span></span></div>
+        <div class="start-overlay" id="start-overlay">
+          <div class="start-card"><p class="start-eyebrow">纸鹤来信 · 山河寻印记</p><h2 id="start-title">山河待你启程</h2><p id="start-description">走过树冠与竹桥，寻找纸狐阿砚。</p><div class="chapter-mechanics" id="chapter-mechanics"></div><button class="primary-button" id="start-button"><span class="play-triangle"></span> 开始冒险 <span class="button-arrow">→</span></button><span class="start-hint">按 Enter 也可开始 · 建议使用键盘游玩</span></div>
+        </div>
+        <div class="status-overlay hidden" id="status-overlay"><div class="status-card"><span class="status-mark" id="status-mark">憩</span><p class="eyebrow" id="status-eyebrow">TAKE A BREATH</p><h2 id="status-title">且听风吟</h2><p id="status-description">山河会在原地，等你回来。</p><div class="result-stats hidden" id="result-stats"></div><div class="status-actions"><button class="primary-button" id="status-primary">继续冒险 →</button><button class="secondary-button" id="status-secondary">重新开始</button></div></div></div>
+        <div class="toast hidden" id="toast" role="status"></div>
+        <div class="story-bubble hidden" id="story-bubble" role="status"><div><strong id="story-speaker"></strong><button id="dismiss-story" aria-label="收起剧情">×</button></div><p id="story-text"></p></div>
+        <div class="immersive-toolbar"><span id="immersive-objective"></span><button id="immersive-map" aria-label="打开世界地图">图</button><button id="immersive-journal" aria-label="打开山河手记">册</button><button id="immersive-pause" aria-label="暂停游戏">Ⅱ</button><button id="leave-immersive" aria-label="退出沉浸模式">↙</button></div>
+        <span class="immersive-stats" id="immersive-stats"></span>
+        <span class="interaction-hint hidden" id="interaction-hint"></span>
+        <div class="boss-hud hidden" id="boss-hud"><span>墨魇 · 被遗忘的心</span><div><i id="boss-health"></i></div></div>
+        <div class="mobile-controls" id="mobile-controls" aria-label="触屏游戏控制"></div>
+        <div class="race-scores hidden" id="race-scores"><span>朱红 <b id="p1-score">0</b></span><span>青竹 <b id="p2-score">0</b></span></div>
+      </div>
+      <div class="game-footer"><div class="live-status"><i></i><span id="game-status">画卷已就绪</span><span class="footer-divider"></span><span id="mode-status">经典冒险 · 单人</span></div><div class="game-footer-actions"><button id="restart-button" title="重新开始本关">↻ <span>重来</span></button><button id="pause-button" title="暂停 / 继续 (P)">Ⅱ <span>暂停</span></button><span class="footer-divider"></span><span class="footer-tip">慢慢来，每一跃都是风景</span></div></div>
+    </section>
+
+    <section class="settings-row" aria-label="游戏设置">
+      <div class="mode-settings"><div class="section-label"><span class="label-number">01</span><h2>选择玩法</h2><span>PLAY YOUR WAY</span></div><div class="mode-options" role="group" aria-label="游戏模式"><button class="mode-option selected" data-mode="world"><span class="mode-symbol">游</span><strong>山河漫游</strong><small>连通世界、造桥、故事存档</small><i></i></button><button class="mode-option selected" data-mode="classic"><span class="mode-symbol">山</span><strong>独立闯关</strong><small>八个长区域，各自挑战</small><i></i></button><button class="mode-option" data-mode="race"><span class="mode-symbol">竞</span><strong>双人竞速</strong><small>同屏比拼，先到为赢</small><i></i></button><button class="mode-option" data-mode="tide"><span class="mode-symbol">潮</span><strong>墨潮追逐</strong><small>墨浪将至，步履不停</small><i></i></button><button class="mode-option" data-mode="hunt"><span class="mode-symbol">寻</span><strong>寻印游记</strong><small>集齐本地藏印，再落朱章</small><i></i></button><button class="mode-option" data-mode="zen"><span class="mode-symbol">闲</span><strong>闲游山河</strong><small>免伤无限重试，慢慢探索</small><i></i></button></div></div>
+      <div class="players-settings"><div class="section-label"><span class="label-number">02</span><h2>结伴入画</h2><span>BETTER TOGETHER</span></div><div class="player-selector" role="group" aria-label="玩家人数"><button class="selected" data-players="1"><span class="tiny-player red"></span>一人独行</button><button data-players="2"><span class="tiny-player green"></span><span class="tiny-player red"></span>两人同游</button></div><p class="players-note" id="players-note">一个人的江湖，也有万千风景。</p></div>
+    </section>
+
+    <section class="touch-settings" aria-label="触控与辅助设置"><span>按你的节奏入画</span><label><input type="checkbox" id="auto-jump">长按连续跳</label><label><input type="checkbox" id="large-controls">大号触屏按键</label><label><input type="checkbox" id="haptics">轻触震动</label><button id="touch-focus">⛶ 沉浸游玩</button><small>手机可竖屏，双人推荐平板横屏 · 双击跳跃二段跃</small></section>
+<section class="world-summary"><div><span class="world-version">山河漫游 · 开放画卷</span><strong>八方有路，旧地有新意</strong><p>8 个长区域 · 16 个隐藏空间 · 双向道路 · 可造纸桥 · 跨地域角色支线</p></div><button id="summary-map">展开山河图 <span>↗</span></button><span id="save-indicator">旅程自动保存在当前浏览器</span></section>
+    <section class="journey-strip" id="journey-strip" aria-label="故事通关进度"></section>
+    <section class="guide-strip"><div class="guide-heading"><span class="guide-symbol">手</span><div><strong>入画小笺</strong><small>轻松上手，尽兴冒险</small></div></div><div class="key-group"><span class="player-dot red"></span><span>玩家一</span><kbd>A</kbd><kbd>D</kbd><small>移动</small><kbd>W</kbd><span class="key-or">/</span><kbd class="space-key">空格</kbd><small>跳跃</small><kbd>E</kbd><small>踏墨</small></div><div class="key-group second-player-guide"><span class="player-dot green"></span><span>玩家二</span><kbd>←</kbd><kbd>→</kbd><small>移动</small><kbd>↑</kbd><small>跳跃</small><kbd>.</kbd><small>踏墨</small></div><button class="guide-more" id="guide-more">完整指南 <span>↗</span></button></section>
+
+    <section class="chapters-section" id="chapters-section"><div class="chapters-header"><div><p class="eyebrow">EIGHT REGIONS, A WORLD TO RETURN TO</p><h2>展开山河图卷<span> / 所行皆风景</span></h2></div><span class="chapter-counter">壹 — 捌</span></div><div class="chapter-grid" id="chapter-grid"></div></section>
+    <footer class="site-footer"><span><span class="footer-seal">墨</span>以墨为境，以心为旅。</span><span>致敬童年的快乐 · 非官方同人作品 <span class="footer-star">✦</span> MADE FOR THE JOY OF PLAY</span></footer>
+  </main>
+
+  <dialog id="help-dialog" class="help-dialog"><button class="dialog-close icon-button" id="close-help" aria-label="关闭指南">×</button><p class="eyebrow">A SMALL GUIDE TO A BIG ADVENTURE</p><h2>入画指南</h2><p class="help-intro">经典的快乐，藏在每一次跳跃里。</p><div class="help-grid"><div><h3>跳进一卷真正不同的山河</h3><p>竹林有树冠支路、弹竹、纸狐与传送纸门；云山是悬空岛屿、风柱和浮舟；月河可以下潜、乘船，点亮两岸灯台开闸；古寺需登阶敲双钟，再挑战墨魇守卫。</p></div><div><h3>二段跃与踏墨</h3><p>玩家一 A/D 移动，W/空格跳跃，在空中松开再按可二段跃。E 踏墨冲刺可跨越远处平台并破敌，冷却 2.4 秒。山河漫游可在空中按 Q / 造折纸桥，每地最多四座，营地免费补纸。S 下潜/交谈/入门，F 莲火，Q 在空中造纸桥。玩家二方向键移动与跳跃，↓ 下潜/交谈/入门，. 踏墨，/ 莲火，逗号造桥。</p></div><div><h3>每条支路都有回响</h3><p>不同地域有 3–5 枚藏印；寻印挑战需要全部集齐。山河漫游可以自由往返，已点亮的营地支持地图旅行。每地两处暗室收藏独立的旧画记忆。纸门与人物都靠近按 S/↓/探，按 M 或「图」打开世界地图。灯台与铜钟触碰即可唤醒，也可用莲火远程点亮。红旗记录所在高度的复活点。</p></div><div><h3>在水里，也能去远方</h3><p>水中每按一次跳跃向上划水，按住下键下潜。月河没有窒息惩罚，河床可以行走。去水底寻找藏印，再从木栈台下方向上跃回岸边。</p></div><div><h3>守卫不是没有破绽</h3><p>墨魇会先蓄力，再向两侧发出地面墨浪，此时跳起躲避。踩头、踏墨或莲火可破除它的五层墨障。闲游模式不受伤，但仍需唤醒机关和守卫，完成故事。</p></div><div><h3>为手指留出一片山河</h3><p>触屏按键位于独立操作区，不遮挡角色。左手移动，右手跳跃与踏墨，可多指同时操作。探键也可下潜。支持按住移动时滑向另一方向、大号按键、长按连跳、沉浸模式及双人分屏独立触控。</p></div></div><button class="primary-button" id="help-play">明白了，入画 →</button></dialog>
+  <dialog id="journal-dialog" class="help-dialog journal-dialog"><button class="dialog-close icon-button" id="close-journal" aria-label="关闭手记">×</button><p class="eyebrow">THE COLOURS WE LEAVE BEHIND</p><h2>山河手记</h2><p class="help-intro">每枚灵印、每次相逢，都替画卷添一笔颜色。</p><div id="journal-content"></div></dialog>
+  <dialog id="world-map-dialog" class="world-map-dialog"><button class="dialog-close icon-button" id="close-map" aria-label="关闭世界地图">×</button><p class="eyebrow">A WORLD THAT REMEMBERS YOUR FOOTSTEPS</p><h2>八方山河图<span id="world-map-count"></span></h2><p class="map-intro" id="map-message">沿路牌相遇，从营地重返。点亮的地域可以直接回访。</p><div class="world-canvas" id="world-canvas"><svg id="world-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg><div id="world-nodes"></div></div><div class="map-footer"><span>● 已抵达　◌ 待探索　✦ 暗室记忆</span><div><button id="export-world">导出旅程</button><button id="import-world">导入旅程</button><input type="file" id="world-file" accept="application/json,.json" hidden></div></div><div class="map-abilities" id="map-abilities"></div><p class="map-ability-note">Q / 造：在空中折纸搭桥，营地免费补纸。御风纸鸢学会后按住跳跃缓降；莲步学会后可踏水，按探仍能下潜。照影灯、回声与暖墨会打开旧地域的新入口。</p></dialog>
+  <dialog id="npc-dialog" class="help-dialog npc-dialog"><button class="dialog-close icon-button" id="close-npc" aria-label="结束交谈">×</button><p class="eyebrow">SOME ROADS BEGIN WITH A CONVERSATION</p><h2 id="npc-speaker"></h2><p id="npc-text"></p><div id="npc-choices"></div><span id="npc-wallet"></span></dialog>
+  <dialog id="ending-dialog" class="help-dialog ending-dialog"><p class="eyebrow">THE LAST STROKE IS YOURS</p><h2>把最后一笔，留给远方</h2><p>画师终于肯让女儿走出这幅画。八方山河已醒来，你愿意如何安放那一页空白？旅程仍可继续，找到的记忆与走过的路都会保留。</p><button data-ending="leave-white"><strong>保留一页空白</strong><span>让尚未归来的故事有处落笔。御风纸鸢可以更长久地滑翔。</span></button><button data-ending="open-scroll"><strong>为画卷打开一扇窗</strong><span>让远方与故乡都有新的路。折纸桥可以铺得更长。</span></button></dialog>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
